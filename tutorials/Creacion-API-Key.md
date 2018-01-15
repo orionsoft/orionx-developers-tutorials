@@ -3,13 +3,6 @@
 
 En este breve tutorial se mostrará cómo crear una llave de autentificación (`API Key`) para  la `API` (*Application Programming Interface*) de [**Orionx.io**](http://orionx.io).
 
-Tabla de Contenido
-------
-- [**Contexto**](#contexto)
-- [**Crear una API key**](#crear-una-api-key)
-- [**Pruebas**](#pruebas-graphql)
-    - [**GraphQL**](#graphql)
-
 ## **Contexto**
 
 Orionx.io ha creado una API para que sus usuarios puedan crear programas y aplicaciones utilizando los datos que la API brinda desde los servidores de Orion.

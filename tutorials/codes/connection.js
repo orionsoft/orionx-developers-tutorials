@@ -25,8 +25,7 @@ async function fullQuery(url, query, apiKey, apiSecretKey) {
 
   // Sending request
   try {
-    // Se envía la consulta por medio de FETCH. Consulta tipo POST.
-    let res = await fetch(url, {    
+    let res = await fetch(url, {            // Consulta tipo POST.
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -64,7 +63,7 @@ async function main(query) {
   }
 }
 
-/* Consulta precio CHA en GrapghQL */
+/* Basic GrapghQL Query */
 let query = {                        
     query: `{market(code: "CHACLP"){
     lastTrade{

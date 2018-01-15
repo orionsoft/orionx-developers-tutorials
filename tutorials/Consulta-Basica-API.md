@@ -5,22 +5,6 @@ En este breve tutorial se mostrará, con un código de ejemplo, cómo conectarse
 
 El código mostrado en este tutorial está creado en **JavaScript**. Sin embargo, la metodología aquí empleada se puede implementar en otros lenguajes de programación, tales como C++, Java, Pyton, PHP, entre otros.
 
-Tabla de Contenido
----
-- [**Requisitos Previos**](#requisitos-previos)
-- [**Comprendiendo Antes de programar**](#comprendiendo-antes-de-programar)
-    - [**Antecedentes**](#antecedentes)
-    - [**Abordando el Problema**](#abordando-el-problema)
-- [**Código de Ejemplo**](#c%C3%B3digo-de-ejemplo)
-    - [**Instalacion**](#instalacion)
-    - [**Cargar Módulos**](#cargar-m%C3%B3dulos)
-    - [**Preparación de los Datos**](#preparaci%C3%B3n-de-los-datos)
-    - [**Crear la Consulta (Query)**](#crear-la-consulta-query)
-    - [**Función para realizar la Consulta**](#funci%C3%B3n-para-realizar-la-consulta)
-    - [**Programa Principal**](#programa-principal)
-- [**Ejecutar el Programa**](#ejecutar-el-programa)
-- [**Descarga el código de Conexión**](#descarga-el-c%C3%B3digo-de-conexi%C3%B3n)
-
 ---
 ## **Requisitos Previos**
 
@@ -143,7 +127,7 @@ Una vez los preparativos están listos, se procede a crear la función que reali
 
 ```Javascript
 // Función asíncrona que envía la consulta y espera la respuesta.
-async function enviarConsulta(url, query, apiKey, apiSecretKey) {
+async function sendQuery(url, query, apiKey, apiSecretKey) {
   try {
     // Se envía la consulta por medio de FETCH. Consulta tipo POST.
     let res = await fetch(url, {
@@ -169,14 +153,14 @@ async function enviarConsulta(url, query, apiKey, apiSecretKey) {
 
 ### **Programa Principal**
 
-Por último, se crea el programa principal, el cual hará la llamada a la función de enviarConsulta.
+Por último, se crea el programa principal, el cual hará la llamada a la función de sendQuery.
 
 ```Javascript
 // Función principal
 async function main() {
   try {
-    // Llamando a enviarConsulta
-    let res = await enviarConsulta(
+    // Llamando a sendQuery
+    let res = await sendQuery(
       'http://api.orionx.io/graphql',   // Dirección de la API de Orionx
       priceCHA,                         // query creada
       '<API Key>',                      // Aquí va la API Key
