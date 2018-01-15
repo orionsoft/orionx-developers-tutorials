@@ -200,8 +200,3 @@ Esto nos devolverá un resultado, como el siguiente:
 ## **Descarga el código de Conexión**
 
 [**Connection.js**](https://raw.githubusercontent.com/orionsoft/orionx-developers-tutorials/master/tutorials/codes/connection.js)
-
----
-## Autor
-
-*Tutorial creado por **Alexis Apablaza (aapablaza)***
