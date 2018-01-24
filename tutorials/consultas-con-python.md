@@ -24,7 +24,7 @@ La firma se genera del lado del cliente (Python) y es un código [HMAC](https://
 
 Donde:
 
-* H sera la función Hash SHA256
+* H sera la función Hash SHA512
 * K sera la Secret Key
 * m sera el [timestamp](https://es.wikipedia.org/wiki/Marca_temporal) + el contenido del [body](https://en.wikipedia.org/wiki/HTTP_message_body)
 * Para el resto de las variables y operadores véase la definición [acá](https://es.wikipedia.org/wiki/HMAC#Definici%C3%B3n_(de_RFC_2104))
@@ -51,7 +51,7 @@ $ pip install ujson
 * [Documentación de requests](http://docs.python-requests.org/en/master/)
 * [Documentación de ujson](https://docs.micropython.org/en/latest/pyboard/library/ujson.html)
 
-Se crea un archivo llamado `query.py` donde se escribirá el código. Lo primero será crear la función `hmac_sha256` que permitirá calcular el HMAC tomando la Secret Key, el timestamp y el contenido de la consulta:
+Se crea un archivo llamado `query.py` donde se escribirá el código. Lo primero será crear la función `hmac_sha512` que permitirá calcular el HMAC tomando la Secret Key, el timestamp y el contenido de la consulta:
 
 ```python
 # query.py
