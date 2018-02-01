@@ -24,7 +24,7 @@ La firma se genera del lado del cliente (Python) y es un código [HMAC](https://
 
 Donde:
 
-* H sera la función Hash SHA256
+* H sera la función Hash SHA512
 * K sera la Secret Key
 * m sera el [timestamp](https://es.wikipedia.org/wiki/Marca_temporal) + el contenido del [body](https://en.wikipedia.org/wiki/HTTP_message_body)
 * Para el resto de las variables y operadores véase la definición [acá](https://es.wikipedia.org/wiki/HMAC#Definici%C3%B3n_(de_RFC_2104))
@@ -51,7 +51,7 @@ $ pip install ujson
 * [Documentación de requests](http://docs.python-requests.org/en/master/)
 * [Documentación de ujson](https://docs.micropython.org/en/latest/pyboard/library/ujson.html)
 
-Se crea un archivo llamado `query.py` donde se escribirá el código. Lo primero será crear la función `hmac_sha256` que permitirá calcular el HMAC tomando la Secret Key, el timestamp y el contenido de la consulta:
+Se crea un archivo llamado `query.py` donde se escribirá el código. Lo primero será crear la función `hmac_sha512` que permitirá calcular el HMAC tomando la Secret Key, el timestamp y el contenido de la consulta:
 
 ```python
 # query.py
@@ -62,21 +62,21 @@ import requests
 import hmac
 import time
 
-# Se importa la funcion hash sha256
-from hashlib import sha256
+# Se importa la funcion hash sha512
+from hashlib import sha512
 
 
-# funcion que permite calular el signature
-def hmac_sha256(secret_key, timestamp, body):
+def hmac_sha512(secret_key, timestamp, body):
   # para usar hmac es necesario convertir el secret key 
   # de string utf-8 a bytearray
   key = bytearray(secret_key, 'utf-8')
   msg = str(timestamp) + str(body)
 
-  # ademas sha256 requiere de strings codificados
+  # ademas sha512 requiere de strings codificados
   msg = msg.encode('utf-8')
 
-  return hmac.HMAC(key, msg, sha256)
+  return hmac.HMAC(key, msg, sha512).hexdigest()
+
 
 ```
 
@@ -121,7 +121,7 @@ Documentación de las consultas disponibles en http://api.orionx.io/graphiql en 
 Ahora que ya se tiene el contenido, se procede a generar los Headers:
 
 ```python
-# Contenido total de la consulta en formato JSON
+# Contenido total de la consulta en JSON
 body = ujson.dumps(query)
 
 # Marca de tiempo en segundos convertido a string
@@ -135,12 +135,13 @@ api_key = 'API_KEY'
 secret_key = 'SECRET_KEY'
 
 # String del codigo HMAC
-signature = str(hmac_sha256(secret_key, timestamp, body))
+signature = str(hmac_sha512(secret_key, timestamp, body))
 
 headers = {
-  'X-ORIONX-TIMESTAMP': timestamp,
-  'X-ORIONX-APIKEY': api_key,
-  'X-ORIONX-SIGNATURE': signature
+  'Content-Type': 'application/json',
+  'X-ORIONX-TIMESTAMP': timestamp, # Marca de tiempo actual
+  'X-ORIONX-APIKEY': api_key, # API Key
+  'X-ORIONX-SIGNATURE': signature, #  Firma
 }
 ```
 
@@ -148,12 +149,11 @@ Finalmente se envía todo al servidor:
 
 ```python
 # url del servidor
-url = 'http://api.orionx.io/graphql'
+url = 'https://api2.orionx.io/graphql'
 
-# Se envia usando POST y el body a traves del parametro json
-# Requests detecta si se usa este parametro y automaticamente
-# usa el formato JSON y ademas añade el content-type: json
-response = requests.post(url=url, headers=headers, json=query)
+# Se envia usando POST y 
+# se usa el parametro data para enviar los datos del body
+response = requests.post(url=url, headers=headers, data=body)
 
 # levanta un error si la peticion fue rechazada
 response.raise_for_status()
@@ -179,15 +179,20 @@ import requests
 import hmac
 import time
 
-# Se importa la funcion hash sha256
-from hashlib import sha256
+# Se importa la funcion hash sha512
+from hashlib import sha512
 
 
-def hmac_sha256(secret_key, timestamp, body):
+def hmac_sha512(secret_key, timestamp, body):
+  # para usar hmac es necesario convertir el secret key 
+  # de string utf-8 a bytearray
   key = bytearray(secret_key, 'utf-8')
   msg = str(timestamp) + str(body)
+
+  # ademas sha512 requiere de strings codificados
   msg = msg.encode('utf-8')
-  return hmac.HMAC(key, msg, sha256)
+
+  return hmac.HMAC(key, msg, sha512).hexdigest()
 
 
 # string de consulta: pide a graphql 
@@ -214,7 +219,7 @@ variables = {
   'aggregation': 'h1'
 }
 
-# Contenido total de la consulta
+# se junta en una sola variable
 query = {
   'query': query_str,
   'variables': variables
@@ -234,21 +239,21 @@ api_key = 'API_KEY'
 secret_key = 'SECRET_KEY'
 
 # String del codigo HMAC
-signature = str(hmac_sha256(secret_key, timestamp, body))
+signature = str(hmac_sha512(secret_key, timestamp, body))
 
 headers = {
+  'Content-Type': 'application/json',
   'X-ORIONX-TIMESTAMP': timestamp, # Marca de tiempo actual
   'X-ORIONX-APIKEY': api_key, # API Key
-  'X-ORIONX-SIGNATURE': signature # Firma
+  'X-ORIONX-SIGNATURE': signature, #  Firma
 }
 
 # url del servidor
-url = 'http://api.orionx.io/graphql'
+url = 'https://api2.orionx.io/graphql'
 
-# Se envia usando POST y el body a traves del parametro json
-# Requests detecta si se usa este parametro y automaticamente
-# usa el formato JSON y ademas añade Content-Type: application/json a los Headers
-response = requests.post(url=url, headers=headers, json=query)
+# Se envia usando POST y 
+# se usa el parametro data para enviar los datos del body
+response = requests.post(url=url, headers=headers, data=body)
 
 # levanta un error si la peticion fue rechazada
 response.raise_for_status()
