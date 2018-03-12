@@ -1,4 +1,4 @@
-# Como integrar Orion Pay a tu plataform
+# Como integrar Orion Pay a tu plataforma
 
 Puedes usar Orion Pay desde pay.orionx.com sin programar ni una linea de código, pero si quieres una integración con tu plataforma, debes seguir estos pasos.
 
@@ -17,9 +17,9 @@ Entonces, manos a la obra.
 Lo primero es crear el "Pago". Esto se hace cuando el usuario va a pagar, ya que expira 15 minutos después de que se crea
 y no se puede reutilizar.
 
-Esto se hace haciendo una llamada al api de Orionx. Debes tener una llave en (Orionx Developers)[https://orionx.com/developers], ahí mismo puedes hacer las pruebas.
+Esto se hace haciendo una llamada al api de Orionx. Debes tener una llave en [Orionx Developers](https://orionx.com/developers), ahí mismo puedes hacer las pruebas.
 
-Te recomiendo crear una función donde centralices todas las llamadas al api. Por ejemplo, en NodeJS, (esta)[https://gist.github.com/nicolaslopezj/48905ccb5ec2b738f83f1f6034b44269].
+Te recomiendo crear una función donde centralices todas las llamadas al api. Por ejemplo, en NodeJS, [esta](https://gist.github.com/nicolaslopezj/48905ccb5ec2b738f83f1f6034b44269).
 
 Este es un código de ejemplo de como se crea un "Pago".
 
@@ -27,11 +27,11 @@ Este es un código de ejemplo de como se crea un "Pago".
 const createPaymentForProduct = async function({buyerUserId, productId}) {
   const product = await Products.findOne(productId)
 
-  // Crear un id secreto para que identifiquemos el pago es necesario
+  // Es necesario crear un id secreto para que identifiquemos el pago
   const secret = generateId()
 
   // URL a la que Orionx avisará el resultado del pago. Debes identificarla con el id secreto
-  const callbackURL = 'http://orionx-pay-server.orionapps.org/callback/' + secret
+  const callbackURL = 'https://mitienda.com/orion-pay-callback/' + secret
 
   // La URL a la que queremos redirigir al usuario después de pagar
   const returnURL = ''
@@ -95,3 +95,27 @@ Ahora tenemos que enviar el usuario a la URL del pago y esperar.
 
 ## Resultado del "Pago"
 
+Cualquiera sea el resultado del pago, Orionx te avisará a la URL que especificaste antes.
+
+Si falla el aviso intentaremos de nuevo hasta 3 veces.
+
+```js
+createRoute('/orion-pay-callback/:secret', (params, request) => {
+  // Buscamos el pago usando el identificador secreto
+  const payment = Payments.findOne({
+    status: 'waiting',
+    orionxPaymentId: request.body._id,
+    secret: params.secret
+  })
+
+  if (request.body.status === 'done') {
+    // si el estado es done, significa que esta todo OK y que ya abonamos los CLP a tu cuenta
+  } else {
+    // cualquier otra respuesta significa un error. Nosotros nos encargamos de devolverle las criptomonedas al usuario
+  }
+})
+```
+
+Cualquier duda que tengas pregunta en el telegram de Orionx Developers, ahí te podremos responder todas las dudas.
+
+https://t.me/orionxdev
