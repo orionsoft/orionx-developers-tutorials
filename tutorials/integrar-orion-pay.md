@@ -66,7 +66,9 @@ const createPaymentForProduct = async function({buyerUserId, productId}) {
       callbackURL,
       returnURL,
       amount: product.price
-    }
+    }, 
+    apiKey, 
+    apiSecretKey
   )
 
   // Vamos a guardar el registro del pago en la base de datos
