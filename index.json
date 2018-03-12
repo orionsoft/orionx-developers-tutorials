@@ -9,13 +9,22 @@
     "tags": ["tutoriales", "developers"]
   },
   {
-    "key": "consulta-basica-api",
-    "title": "Consulta Básica API",
-    "author": "aapablaza",
-    "description": "Aprende a realizar una consulta básica a la API de Orionx",
+    "key": "integrar-orion-pay",
+    "title": "Integración con Orion Pay",
+    "author": "nicolaslopezj",
+    "description": "Puedes usar Orion Pay desde pay.orionx.com sin programar ni una linea de código, pero si quieres una integración con tu plataforma, debes seguir estos pasos",
     "image":
-      "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?dpr=1&auto=format&fit=crop&w=1000&q=80",
-    "tags": ["nodejs", "auth", "javascript", "query"]
+      "https://images.unsplash.com/photo-1517373116369-9bdb8cdc9f62?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=e55a92298bc42b00da5e8d6226274ee3&auto=format&fit=crop&w=2550&q=80",
+    "tags": ["nodejs", "orionpay", "pay"]
+  },
+  {
+    "key": "creacion-api-key",
+    "title": "Creación API Key",
+    "author": "aapablaza",
+    "description": "Cómo crear una API Key de Orionx",
+    "image":
+      "https://images.unsplash.com/photo-1453134765485-7f9a71a803d5?auto=format&fit=crop&w=1348&q=80",
+    "tags": ["api", "key", "llave"]
   },
   {
     "key": "creacion-api-key",
