@@ -38,7 +38,6 @@ const createPaymentForProduct = async function({buyerUserId, productId}) {
 
   // Creamos el pago, nos retorna el ID del Pago, que usaremos para enviar al usuario a la URL
   const {orionxPayment} = await callOrionx(
-    product.userId,
     gql`
       mutation createPayment(
         $title: String
