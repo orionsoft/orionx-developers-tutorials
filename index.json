@@ -43,5 +43,14 @@
     "image":
       "https://images.unsplash.com/photo-1484589065579-248aad0d8b13?auto=format&fit=crop&w=792&q=80",
     "tags": ["query", "python", "api"]
+  },
+  {
+    "key": "consultas-con-java",
+    "title": "Consulta la API de OrionX desde Java",
+    "author": "panterozo",
+    "description": "Programa que te permite generar consultas a la API de OrionX",
+    "image":
+      "http://www.alychidesigns.com/wp-content/uploads/2017/09/maxresdefault.jpg?auto=format&fit=crop&w=792&q=80",
+    "tags": ["java", "query", "api", "llave", "eclipse"]
   }
 ]
